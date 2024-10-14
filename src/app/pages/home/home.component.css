@@ -1,0 +1,75 @@
+
+button{
+    border-radius: 25px;
+}
+#map { 
+  height: 1080px; 
+}
+.card {
+    margin-bottom: 15px;
+    border-radius: 15px;
+  }
+  
+  .card-body {
+    text-align: left;
+  }
+  
+  .badge {
+    margin-left: 5px;
+  }
+  
+  .current-bus-stop, .nearby-stop {
+    border-radius: 10px;
+}
+
+.badge {
+    font-size: 14px;
+    padding: 6px 10px;
+}
+
+.bus-details i {
+    color: yellow; /* Bell icon color */
+}
+
+.bg-primary {
+    background-color: #007bff !important;
+}
+
+.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.bg-secondary {
+    background-color: #6c757d !important;
+}
+
+.bg-dark {
+    background-color: #343a40 !important;
+}
+
+.nearby-stop {
+    border: 1px solid #ccc;
+}
+
+.nearby-stop i {
+    color: #f00; /* Custom color for nearby stop icons */
+}
+  
+  .input-group {
+    border-radius: 10px;
+  }
+  
+  input[type="text"] {
+    border-radius: 20px 0 0 20px;
+  }
+  
+  button[type="button"] {
+    border-radius: 0 20px 20px 0;
+  }
+  
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+  }

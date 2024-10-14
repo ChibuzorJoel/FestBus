@@ -1,0 +1,30 @@
+<div class="container-fluid mt-2 bg-success">
+    <h2 class="text-center text-white">Route Information</h2>
+  
+    <!-- Map Section -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="map-container" id="routeMap"></div>
+      </div>
+    </div>
+  
+    <!-- Journey Duration -->
+    <div class="row mt-3">
+      <div class="col-12">
+        <h4 class="text-white text-center">Duration: {{ routeDuration }}</h4>
+      </div>
+    </div>
+  
+    <!-- Detailed Breakdown of Stops -->
+    <div class="row mt-4 ">
+      <div class="col-12 bg-dark text-white">
+        <h5 class="text-white">Stops along the route:</h5>
+        <ul class="list-group">
+          <li *ngFor="let stop of routeStops; let i = index" class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ i + 1 }}. {{ stop.name }}</span>
+            <span class="badge bg-primary">Stop {{ i + 1 }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>

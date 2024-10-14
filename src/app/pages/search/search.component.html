@@ -1,0 +1,106 @@
+<div class="container-fluid search-results-page mt-2 bg-success">
+  <!-- Location and Search Header -->
+  <div class="location-section py-3 text-white">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3 class="text-center text-white">Search Bus Routes</h3>
+      <span>Festac Town</span>
+    </div>
+  </div>
+
+  <!-- Search Form -->
+  <form (submit)="searchRoutes()" (ngSubmit)="searchRoutes()">
+    <div class="row mb-3 search-inputs py-3">
+      <!-- From Location -->
+      <div class="col-md-6">
+        <label for="from" class="text-white">From:</label>
+        <input 
+          type="text" 
+          id="from" 
+          [(ngModel)]="fromLocation" 
+          name="fromLocation" 
+          class="form-control" 
+          placeholder="Enter start location" 
+          required 
+          >
+        <!-- Display suggestions for 'fromLocation' -->
+        <ul *ngIf="filteredFromStops.length > 0" class="list-group mt-2">
+          <li *ngFor="let stop of filteredFromStops" 
+              class="list-group-item" 
+              (click)="selectFromStop(stop.name)">
+            {{ stop.name }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- To Location -->
+      <div class="col-md-6">
+        <label for="to" class="text-white">To:</label>
+        <input 
+          type="text" 
+          id="to" 
+          [(ngModel)]="toLocation" 
+          name="toLocation" 
+          class="form-control" 
+          placeholder="Enter destination" 
+          required 
+          >
+        <!-- Display suggestions for 'toLocation' -->
+        <ul *ngIf="filteredToStops.length > 0" class="list-group mt-2">
+          <li *ngFor="let stop of filteredToStops" 
+              class="list-group-item" 
+              (click)="selectToStop(stop.name)">
+            {{ stop.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="onSearchButtonClick()">Search</button>
+  </form>
+
+  <!-- Route Results Section -->
+  <div *ngIf="journeyResults" class="mt-4">
+    <h3 class="text-white">Journey Information</h3>
+    <div class="container-fluid results-section py-3">
+      <div class="journey-info mb-3 bg-dark text-white">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="time-info">
+            <span class="departure-time">Expected Arrival: {{ journeyResults.arrivalTime }}</span> <br>
+            <span class="duration-text">Journey Duration: {{ journeyResults.formattedDuration }}</span> 
+          </div>
+          <div class="arrival-time">
+            <span>Drop-off Time: {{ journeyResults.dropOffTime }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Route List Section -->
+  <div *ngIf="filteredRoutes.length > 0" class="mt-4">
+    <h3 class="text-white">Route Results</h3>
+    <div class="container-fluid routes-section py-3">
+      <div class="route-card mb-3 bg-dark text-white" *ngFor="let route of filteredRoutes">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="time-info">
+            <span class="departure-time">{{ route.departureTime }}</span>
+            <span class="duration-text">{{ route.duration }} min</span>
+          </div>
+          <div class="arrival-time">
+            <span>{{ route.arrivalTime }}</span>
+          </div>
+        </div>
+        <div class="bus-info mt-2">
+          <span *ngFor="let bus of route.buses" class="bus-number">{{ bus }}</span>
+        </div>
+        <div class="more-info mt-1">
+          <span>Leave in {{ route.leaveIn }} min</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Results Found -->
+  <div *ngIf="filteredRoutes.length === 0 && !journeyResults" class="mt-4">
+    <h4 class="text-white">No routes found. Please adjust your search.</h4>
+  </div>
+</div>

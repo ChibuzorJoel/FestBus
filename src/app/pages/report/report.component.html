@@ -1,0 +1,60 @@
+<div class="container-fluid mt-2 bg-success">
+    <h2 class="text-center">Submit a Report</h2>
+  
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+  
+      <!-- Subject Input -->
+      <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" id="subject" class="form-control" formControlName="subject" placeholder="Enter subject">
+        <div *ngIf="reportForm.get('subject')?.invalid && reportForm.get('subject')?.touched" class="text-danger">
+          Subject is required.
+        </div>
+      </div>
+  
+      <!-- Email Input -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter your email">
+        <div *ngIf="reportForm.get('email')?.invalid && reportForm.get('email')?.touched" class="text-danger">
+          Please enter a valid email.
+        </div>
+      </div>
+  
+      <!-- Phone Number Input -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone Number</label>
+        <input type="tel" id="phone" class="form-control" formControlName="phone" placeholder="Enter your phone number">
+        <div *ngIf="reportForm.get('phone')?.invalid && reportForm.get('phone')?.touched" class="text-danger">
+          Please enter a valid phone number.
+        </div>
+      </div>
+  
+      <!-- Message Input -->
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea id="message" class="form-control" rows="5" formControlName="message" placeholder="Enter your message"></textarea>
+        <div *ngIf="reportForm.get('message')?.invalid && reportForm.get('message')?.touched" class="text-danger">
+          Message must be at least 10 characters long.
+        </div>
+      </div>
+  
+      <!-- File Attachment -->
+      <div class="mb-3">
+        <label for="attachment" class="form-label">Attachment (optional)</label>
+        <input type="file" id="attachment" class="form-control" (change)="onFileSelected($event)">
+      </div>
+  
+      <!-- Submit Button -->
+      <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || reportForm.invalid">
+          {{ isSubmitting ? 'Submitting...' : 'Submit Report' }}
+        </button>
+      </div>
+  
+    </form>
+  
+    <!-- Success or Error Message -->
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+  </div>

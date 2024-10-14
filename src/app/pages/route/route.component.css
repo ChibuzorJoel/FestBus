@@ -1,0 +1,10 @@
+.map-container {
+    height: 400px;
+    width: 100%;
+    border: 2px solid #ccc;
+    margin-bottom: 20px;
+  }
+  #routeMap { 
+    height: 1080px; 
+  }
+ 

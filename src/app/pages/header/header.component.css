@@ -1,0 +1,17 @@
+.icon-hover:hover .icon-green {
+    color: green;
+}
+
+/* Adjust the navbar for better spacing on mobile */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0.5rem 0; /* Add vertical spacing between nav items */
+    }
+}
+header{
+    margin-top: 150px;
+}
