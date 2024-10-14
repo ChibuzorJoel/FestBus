@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Observable for searching from location
+    // Observable for searching 'from' location
     this.fromSearchSubject.pipe(
       debounceTime(300),              // Wait for 300ms after typing stops
       distinctUntilChanged(),         // Avoid unnecessary requests if input doesn't change
@@ -37,14 +37,14 @@ export class SearchComponent implements OnInit {
         if (this.fromLocation.length >= 3) {
           return this.busDataService.searchBusStops(this.fromLocation);
         } else {
-          return [];  // Return empty array if less than 3 characters are typed
+          return this.busDataService.getAllBusStops();  // Return all stops if less than 3 characters
         }
       })
     ).subscribe((filteredStops: BusStop[]) => {
       this.filteredFromStops = filteredStops;  // Store filtered 'from' stops
     });
 
-    // Observable for searching to location
+    // Observable for searching 'to' location
     this.toSearchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -52,7 +52,7 @@ export class SearchComponent implements OnInit {
         if (this.toLocation.length >= 3) {
           return this.busDataService.searchBusStops(this.toLocation);
         } else {
-          return [];
+          return this.busDataService.getAllBusStops();  // Return all stops if less than 3 characters
         }
       })
     ).subscribe((filteredStops: BusStop[]) => {
@@ -119,11 +119,19 @@ export class SearchComponent implements OnInit {
       this.busDataService.searchBusStops(this.fromLocation).subscribe((stops: BusStop[]) => {
         this.filteredFromStops = stops;  // Assign the filtered 'from' stops to the array
       });
+    } else {
+      this.busDataService.getAllBusStops().subscribe((stops: BusStop[]) => {
+        this.filteredFromStops = stops;  // Fetch all stops if less than 3 characters
+      });
     }
 
     if (this.toLocation.length >= 3) {
       this.busDataService.searchBusStops(this.toLocation).subscribe((stops: BusStop[]) => {
         this.filteredToStops = stops;  // Assign the filtered 'to' stops to the array
+      });
+    } else {
+      this.busDataService.getAllBusStops().subscribe((stops: BusStop[]) => {
+        this.filteredToStops = stops;  // Fetch all stops if less than 3 characters
       });
     }
   }

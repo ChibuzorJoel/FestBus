@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';  
 import { map } from 'rxjs/operators';
+
 
 export interface BusStop {
   name: string;
@@ -63,7 +65,7 @@ export class BusDataService {
     }
   ];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   // Fetch available routes
   getRoutes() {
@@ -96,5 +98,8 @@ export class BusDataService {
       // Example logic: filter routes where departure or arrival matches the location
       return route.buses.some(bus => bus.toLowerCase().includes(fromLocation.toLowerCase()) || bus.toLowerCase().includes(toLocation.toLowerCase()));
     }));
+  }
+  getAllBusStops(): Observable<BusStop[]> {
+    return this.http.get<BusStop[]>('your-api-endpoint-to-get-all-bus-stops');
   }
 }
