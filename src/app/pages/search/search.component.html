@@ -8,7 +8,7 @@
   </div>
 
   <!-- Search Form -->
-  <form (submit)="searchRoutes()" (ngSubmit)="searchRoutes()">
+  <form (submit)="onSearchButtonClick()" (ngSubmit)="onSearchButtonClick()">
     <div class="row mb-3 search-inputs py-3">
       <!-- From Location -->
       <div class="col-md-6">
@@ -20,8 +20,8 @@
           name="fromLocation" 
           class="form-control" 
           placeholder="Enter start location" 
-          required 
-          >
+          (input)="onFromLocationInput()" 
+          required>
         <!-- Display suggestions for 'fromLocation' -->
         <ul *ngIf="filteredFromStops.length > 0" class="list-group mt-2">
           <li *ngFor="let stop of filteredFromStops" 
@@ -42,8 +42,8 @@
           name="toLocation" 
           class="form-control" 
           placeholder="Enter destination" 
-          required 
-          >
+          (input)="onToLocationInput()" 
+          required>
         <!-- Display suggestions for 'toLocation' -->
         <ul *ngIf="filteredToStops.length > 0" class="list-group mt-2">
           <li *ngFor="let stop of filteredToStops" 
@@ -54,7 +54,7 @@
         </ul>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="onSearchButtonClick()">Search</button>
+    <button type="submit" class="btn btn-primary">Search</button>
   </form>
 
   <!-- Route Results Section -->
