@@ -10,8 +10,12 @@
   
     <!-- Bus Number Input -->
     <div class="row mb-4 search-inputs py-3">
-      <div class="col-md-12">
-        <label for="busNumber" class="text-white fw-semibold">Bus Number:</label>
+      <div class="col-md-12 position-relative">
+        <label for="busNumber" class="text-white fw-semibold mb-2">Bus Number:</label>
+        <div class="input-group">
+          <span class="input-group-text bg-secondary text-white">
+            <i class="fas fa-bus"></i> <!-- Bus icon -->
+          </span>
         <input 
           type="text" 
           id="busNumber" 
@@ -36,9 +40,11 @@
         <div class="bus-stop-card mb-4 bg-dark text-white p-4 rounded shadow-lg" *ngFor="let stop of filteredBusStops">
           <div class="d-flex justify-content-between align-items-center">
             <div class="stop-info">
+              <i class="fas fa-map-marker-alt text-warning"></i>
               <span class="stop-name fw-semibold">{{ stop.name }}</span>
             </div>
             <div class="buses-info">
+              <i class="fas fa-bus text-primary"></i> 
               <span class="fw-semibold">Buses: {{ stop.buses.join(', ') }}</span>
             </div>
           </div>

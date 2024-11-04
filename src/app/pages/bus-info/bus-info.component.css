@@ -28,6 +28,9 @@
 /* General styles */
 .bus-info-page {
   margin: 20px;
+  margin: 10px;
+  background-color: #013220;
+color: #ffffff;
 }
 
 .search-inputs {
@@ -57,10 +60,7 @@ input {
 
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
-  .bus-info-page {
-    margin: 10px;
-  }
-
+ 
   .search-inputs {
     margin-bottom: 10px;
   }

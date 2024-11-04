@@ -57,7 +57,7 @@ export class RouteComponent implements AfterViewInit {
     this.map = L.map('map').setView(fromCoords.length ? fromCoords : festacCenter, 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 13,
+      maxZoom: 17,
       attribution: '© OpenStreetMap'
     }).addTo(this.map);
 
