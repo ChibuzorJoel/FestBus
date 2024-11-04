@@ -1,0 +1,71 @@
+/* Cursor change for clickable elements */
+.navbar-brand,
+.btn,
+.bus-stop-card {
+  cursor: pointer; /* Change cursor to pointer for better UX */
+  transition: transform 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Navbar brand hover effect */
+.navbar-brand:hover {
+  color: #FFD700; /* Change color on hover (gold) */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+  transform: scale(1.1); /* Slightly increase the size */
+}
+
+/* Bus stop card hover effect */
+.bus-stop-card:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
+}
+
+/* Button hover effect */
+.btn:hover {
+  background-color: #0056b3; /* Change background on hover */
+  border-color: #0056b3; /* Change border color on hover */
+  transform: scale(1.02); /* Slightly increase size */
+}
+
+/* General styles */
+.bus-info-page {
+  margin: 20px;
+}
+
+.search-inputs {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc; /* Border for input */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.spinner-border {
+  display: block;
+  margin: 20px auto;
+}
+
+.no-results {
+  color: #ff6666;
+}
+
+.clear-results {
+  margin-top: 10px;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .bus-info-page {
+    margin: 10px;
+  }
+
+  .search-inputs {
+    margin-bottom: 10px;
+  }
+
+  input {
+    font-size: 12px; /* Slightly smaller font on mobile */
+  }
+}

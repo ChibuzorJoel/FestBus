@@ -1,58 +1,118 @@
-import { Component, OnInit } from '@angular/core';
-import * as L from 'leaflet';
+import { AfterViewInit, Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MapService } from 'src/app/Services/map.service'; // Import the MapService
+import { MapService } from 'src/app/Services/map.service';
+import 'leaflet-routing-machine';
+declare const L: any;
 
 @Component({
   selector: 'app-route',
   templateUrl: './route.component.html',
   styleUrls: ['./route.component.css']
 })
-export class RouteComponent implements OnInit {
+export class RouteComponent implements AfterViewInit {
+  fromLocation: string = 'Festac Town';
+  toLocation: string = 'Mile 2 Bus Stop';
+  routeDuration: string = 'Loading...';
+  routeDistance: string = 'Loading...';
+  routeStops: any[] = []; // Array to hold stops with IDs
+  routeInstructions: any[] = []; // Array to store each instruction
   map: any;
-  routeDetails: any;
-  routeId: string = '';
-  routeDuration: string = '';
-  routeStops: any[] = [];
+  loading: boolean = true;
+  routeLayer: any;
 
-  constructor(private mapService: MapService, private route: ActivatedRoute) { }
-  ngOnInit(): void {
-    // Retrieve the route ID from the URL (e.g., /route/:id)
-    this.routeId = this.route.snapshot.paramMap.get('id') || '';
+  constructor(private route: ActivatedRoute, private mapService: MapService, private cdr: ChangeDetectorRef) {}
 
-    // Fetch route details using the service
-    this.routeDetails = this.mapService.getRouteDetails(this.routeId);
-    this.routeDuration = this.routeDetails.duration;
-    this.routeStops = this.routeDetails.stops;
-
-    // Initialize the map and show the route
-    this.initMap();
-    this.displayRouteOnMap();
+  ngAfterViewInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.fromLocation = params['from'] || this.fromLocation;
+      this.toLocation = params['to'] || this.toLocation;
+      this.getRouteCoordinates();
+    });
   }
 
-  private initMap(): void {
-    // Initialize the map centered on the first stop of the route
-    this.map = L.map('routeMap', {
-      center: this.routeStops[0].coords,
-      zoom: 13
-    });
+  getRouteCoordinates() {
+    const fromCoords$ = this.mapService.getCoordinatesForLocation(this.fromLocation);
+    const toCoords$ = this.mapService.getCoordinatesForLocation(this.toLocation);
 
-    // Add the tile layer (map background)
+    fromCoords$.subscribe({
+      next: (fromCoords) => {
+        toCoords$.subscribe({
+          next: (toCoords) => {
+            this.initializeMap(fromCoords, toCoords);
+            this.fetchRouteDetails(fromCoords, toCoords);
+            this.loading = false;
+          }
+        });
+      }
+    });
+  }
+
+  initializeMap(fromCoords: [number, number], toCoords: [number, number]) {
+    const festacCenter: [number, number] = [6.465422, 3.310377];
+
+    if (this.map) {
+      this.map.remove();
+    }
+
+    this.map = L.map('map').setView(fromCoords.length ? fromCoords : festacCenter, 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      maxZoom: 13,
+      attribution: '© OpenStreetMap'
     }).addTo(this.map);
+
+    L.marker(fromCoords).addTo(this.map).bindPopup(`<b>Start:</b> ${this.fromLocation}`).openPopup();
+    L.marker(toCoords).addTo(this.map).bindPopup(`<b>Destination:</b> ${this.toLocation}`);
+
+    if (this.routeLayer) {
+      this.routeLayer.remove();
+    }
+    this.routeLayer = L.polyline([fromCoords, toCoords], { color: 'blue', weight: 5, opacity: 0.7 }).addTo(this.map);
+
+    L.Routing.control({
+      waypoints: [
+        L.latLng(fromCoords[0], fromCoords[1]),
+        L.latLng(toCoords[0], toCoords[1])
+      ],
+      routeWhileDragging: true,
+      show: true,
+      createMarker: () => null,
+    })
+    .on('routesfound', (e: any) => {
+      const routes = e.routes;
+      const summary = routes[0].summary;
+      this.routeDuration = `${Math.round(summary.totalTime / 60)} min`;
+      this.routeDistance = `${(summary.totalDistance / 1000).toFixed(2)} km`;
+      this.routeInstructions = routes[0].instructions; // Store the instructions here
+      this.getStopsAlongRoute(fromCoords, toCoords);
+    })
+    .addTo(this.map);
+
+    setTimeout(() => {
+      this.map.invalidateSize();
+    }, 500);
   }
 
-  private displayRouteOnMap(): void {
-    // Plot each stop along the route on the map
-    this.routeStops.forEach((stop, index) => {
-      const marker = L.marker(stop.coords).addTo(this.map);
-      marker.bindPopup(`<b>Stop ${index + 1}:</b> ${stop.name}`).openPopup();
+  getStopsAlongRoute(fromCoords: [number, number], toCoords: [number, number]) {
+    this.mapService.getStopsBetweenLocations(fromCoords, toCoords).subscribe({
+      next: (stops: any[]) => {
+        this.routeStops = stops.map(stop => ({
+          id: stop.id, // Store the ID of the stop
+          name: stop.name || stop,
+          time: stop.time || 'N/A',
+          arrival: stop.arrival || 'N/A',
+          dropOff: stop.dropOff || 'N/A'
+        }));
+      }
     });
+  }
 
-    // Optionally, draw a line connecting the stops
-    const routeCoords = this.routeStops.map(stop => stop.coords);
-    L.polyline(routeCoords, { color: 'blue' }).addTo(this.map);
+  fetchRouteDetails(fromCoords: [number, number], toCoords: [number, number]) {
+    this.mapService.getRouteDetails(`${this.fromLocation}-${this.toLocation}`).subscribe({
+      next: (routeDetails) => {
+        this.routeDuration = routeDetails.duration;
+        this.routeDistance = routeDetails.distance;
+      }
+    });
   }
 }
-

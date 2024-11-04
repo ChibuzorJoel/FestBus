@@ -1,7 +1,32 @@
+/* General Styles */
+.container-fluid {
+  background-color: #013220; /* Dark background for the entire page */
+  min-height: 100vh;
+}
+
+/* Navbar Brand Styles */
+.navbar-brand {
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  cursor: pointer; /* Change cursor to pointer for better UX */
+}
+
+.navbar-brand span {
+  display: inline-block; /* Allow for transform on hover */
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+/* Hover effect */
+.navbar-brand:hover {
+  color: #FFD700; /* Change color on hover (gold) */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+  transform: scale(1.1); /* Slightly increase the size */
+}
+
+/* Location Section */
 .location-section {
   padding: 10px 20px;
   border-radius: 8px;
-
 }
 
 .location-section h5 {
@@ -9,7 +34,25 @@
   font-size: 1.5rem;
   color: white;
 }
+.search-inputs ul {
+  background-color: white;
+  max-height: 120px; /* Adjust height to show approximately 3 locations */
+  overflow-y: auto; /* Allow vertical scrolling */
+  margin-top: 5px;
+  border: 1px solid #ddd; /* Optional: add border for better visibility */
+  border-radius: 4px; /* Optional: round the corners */
+  z-index: 1000; /* Ensure it appears above other elements */
+}
 
+.search-inputs ul li {
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee; /* Optional: add border between items */
+}
+
+.search-inputs ul li:hover {
+  background-color: #f1f1f1; /* Highlight on hover */
+}
 /* Route Card Styles */
 .route-card {
   background-color: white;
@@ -51,11 +94,12 @@
 /* Route Results Section */
 .results-section {
   background-color: #ecf0f1; /* Light background for the results section */
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Increased padding for better spacing */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
 }
 
+/* Journey Information Styles */
 .journey-info {
   background-color: #3498db; /* Blue for journey info section */
   padding: 10px;
@@ -63,19 +107,13 @@
   color: white;
 }
 
-.journey-info .departure-time {
-  font-size: 1.1rem;
-}
-
-.journey-info .duration-text {
-  font-size: 0.9rem;
-}
-
+.journey-info .departure-time,
+.journey-info .duration-text,
 .journey-info .arrival-time {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.1rem; /* Consistent font size */
 }
 
+/* Search Input Styles */
 .search-inputs .form-control {
   border-radius: 4px;
   border: 1px solid #ddd;
@@ -111,9 +149,62 @@ button {
   border-radius: 4px;
   padding: 10px 20px;
   font-size: 1rem;
+  transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
 }
 
 button:hover {
-  background-color: #2980b9;
-  border-color: #2980b9;
+  background-color: #2980b9; /* Darker blue on hover */
+  border-color: #2980b9; /* Match border to hover color */
+}
+
+button:active {
+  background-color: #1c598c; /* Darker shade when active */
+  border-color: #1c598c;
+}
+
+/* Loading Spinner */
+.spinner-border {
+  width: 3rem; /* Adjust spinner size */
+  height: 3rem;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .route-card {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  .journey-info {
+    font-size: 0.9rem; /* Slightly reduce font size */
+  }
+
+  button {
+    font-size: 0.9rem; /* Make buttons smaller on mobile */
+  }
+}
+.search-results-page {
+  color: #ffffff;
+}
+
+.list-group-item {
+  cursor: pointer; /* Pointer cursor for clickable items */
+  transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.list-group-item:hover {
+  background-color: #0056b3; /* Highlight on hover */
+}
+
+.btn-secondary {
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+.btn-secondary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
 }

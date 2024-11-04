@@ -1,7 +1,4 @@
-
-
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { Router } from '@angular/router';
 import 'leaflet-control-geocoder';
@@ -12,7 +9,7 @@ import { MapService } from 'src/app/Services/map.service';  // Import the MapSer
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   map: any;
   userMarker: any;
   userCircle: any;
@@ -23,28 +20,48 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMap();
-    this.loadNearbyBusStops();
     this.locateUser();
-    this.initMap();
-      // Initialize the map
-      this.map = L.map('map').setView([6.465422, 3.306448], 14); 
+    this.loadNearbyBusStops();  // Load nearby stops once user location is determined
+  }
+
+  ngOnDestroy(): void {
+    // Remove the map instance when the component is destroyed
+    if (this.map) {
+      this.map.remove();
+    }
   }
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [6.465422, 3.306448],  // Festac Town coordinates
+      center: [6.465422, 3.306448],  // Festac Town coordinates (default)
       zoom: 14
     });
-    var marker = L.marker([6.4717837, 3.2855813]).addTo(this.map);
-       // Add the tile layer (map background)
+
+    // Add the tile layer (map background)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
+
+    // Set a default marker in Festac Town for demonstration purposes
+    L.marker([6.465422, 3.2855813]).addTo(this.map);
   }
 
   private loadNearbyBusStops(): void {
-    // Fetch nearby bus stops from the MapService
-    this.nearbyStops = this.mapService.getNearbyStops();
+    // Fetch nearby bus stops from the MapService (assuming this is a synchronous method)
+    this.mapService.getNearbyStops().subscribe(
+      (stops: any[]) => {
+        this.nearbyStops = stops;
+        stops.forEach(stop => {
+          L.marker([stop.lat, stop.lng])
+            .addTo(this.map)
+            .bindPopup(`<strong>${stop.name}</strong><br>Buses: ${stop.buses.join(', ')}`)
+            .openPopup();
+        });
+      },
+      (error) => {
+        console.error('Error loading nearby bus stops:', error);
+      }
+    );
   }
 
   private locateUser(): void {
@@ -67,21 +84,24 @@ export class HomeComponent implements OnInit {
           .openPopup();
 
         // Set a circle around the user's location
-        this.userCircle = L.circle([6.4717837, 3.2855813], {
+        this.userCircle = L.circle([lat, lng], {
           color: 'blue',
           fillColor: '#30f',
           fillOpacity: 0.2,
-          radius: 500
+          radius: 500  // Radius in meters
         }).addTo(this.map);
 
         // Center the map on the user's location
-        this.map.setView([6.4717837, 3.2855813], 14);
+        this.map.setView([lat, lng], 14);
 
-        // Set the current bus stop based on the user's location
+        // Set the current bus stop based on the user's location (this can be dynamic)
         this.currentBusStop = {
           name: 'Your Current Location',
-          buses: ['Bus 1', 'Bus 2'] // Placeholder, can be replaced with actual data
+          buses: ['Bus 1', 'Bus 2']  // Placeholder, can be replaced with actual data
         };
+
+        // Optionally, reload nearby stops based on the user's location
+        this.loadNearbyBusStops();
       },
       (error) => {
         alert('Unable to retrieve your location.');

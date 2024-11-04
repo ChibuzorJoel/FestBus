@@ -1,75 +1,105 @@
+button {
+  border-radius: 25px;
+}
 
-button{
-    border-radius: 25px;
-}
 #map { 
-  height: 1080px; 
+  height: 800px; 
 }
+
 .card {
-    margin-bottom: 15px;
-    border-radius: 15px;
-  }
-  
-  .card-body {
-    text-align: left;
-  }
-  
-  .badge {
-    margin-left: 5px;
-  }
-  
-  .current-bus-stop, .nearby-stop {
-    border-radius: 10px;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.card-body {
+  text-align: left;
 }
 
 .badge {
-    font-size: 14px;
-    padding: 6px 10px;
+  margin-left: 5px;
+}
+
+.navbar-brand {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.navbar-brand span {
+  display: inline-block;
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.navbar-brand:hover {
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+}
+
+.current-bus-stop, .nearby-stop {
+  border-radius: 10px;
+}
+
+.badge {
+  font-size: 14px;
+  padding: 6px 10px;
 }
 
 .bus-details i {
-    color: yellow; /* Bell icon color */
+  color: yellow;
 }
 
 .bg-primary {
-    background-color: #007bff !important;
+  background-color: #007bff !important;
 }
 
 .bg-danger {
-    background-color: #dc3545 !important;
-}
-
-.bg-secondary {
-    background-color: #6c757d !important;
+  background-color: #dc3545 !important;
 }
 
 .bg-dark {
-    background-color: #343a40 !important;
+  background-color: #343a40 !important;
 }
 
 .nearby-stop {
-    border: 1px solid #ccc;
+  border: 1px solid #ccc;
 }
 
 .nearby-stop i {
-    color: #f00; /* Custom color for nearby stop icons */
+  color: #f00;
 }
-  
-  .input-group {
-    border-radius: 10px;
-  }
-  
-  input[type="text"] {
-    border-radius: 20px 0 0 20px;
-  }
-  
-  button[type="button"] {
-    border-radius: 0 20px 20px 0;
-  }
-  
-  .list-group-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-  }
+
+.input-group {
+  border-radius: 10px;
+}
+
+input[type="text"] {
+  border-radius: 20px 0 0 20px;
+}
+
+button[type="button"] {
+  border-radius: 0 20px 20px 0;
+}
+
+.list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.nearby-stop:hover {
+  background-color: #000000;
+  color: #b2b2b2;
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific styling for square, bold contact and report buttons */
+.contact-btn, .report-btn {
+  border-radius: 0; /* Square shape */
+  font-weight: bold; /* Bold text */
+  padding: 10px 15px;
+}

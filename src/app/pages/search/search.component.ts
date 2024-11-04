@@ -1,8 +1,11 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { BusDataService, BusStop } from 'src/app/Services/bus-data.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BusDataService } from 'src/app/Services/bus-data.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
+import { BusStop } from 'src/app/model/bus-stop';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-search',
@@ -10,139 +13,190 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  @ViewChild('journeyInfoSection') journeyInfoSection!: ElementRef;
   fromLocation: string = '';
   toLocation: string = '';
+  searchHistory: string[] = [];
   journeyResults: any = null;
   filteredRoutes: any[] = [];
-  
-  filteredFromStops: BusStop[] = [];  // Array for filtered 'from' stops
-  filteredToStops: BusStop[] = [];    // Array for filtered 'to' stops
-  
-  private searchSubject = new Subject<string>(); // Subject for input changes
+  filteredFromStops: BusStop[] = [];
+  filteredToStops: BusStop[] = [];
+  isLoading: boolean = false;
+  validationError: string = '';
+  searchForm: FormGroup;
+  errorMessage: string | null = null;  // For storing error messages
+
+  private searchSubject = new Subject<{ term: string, type: 'from' | 'to' }>();
 
   constructor(
-    private ngZone: NgZone, 
+    private fb: FormBuilder,
+    private ngZone: NgZone,
     private busDataService: BusDataService,
     private router: Router
-  ) {}
+  ) {
+    this.searchForm = this.fb.group({
+      fromLocation: ['', Validators.required],
+      toLocation: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
-    // Initializing search logic for "from" and "to" stops
-    this.searchSubject.pipe(
-      debounceTime(300),              // Wait for 300ms after typing stops
-      distinctUntilChanged(),         // Avoid unnecessary requests if input doesn't change
-      switchMap((searchTerm: string) => {
-        // Fetch filtered bus stops for 'from' and 'to' fields when they are typed
-        if (this.fromLocation.length >= 3) {
-          return this.busDataService.searchBusStops(this.fromLocation); // Fetch filtered from stops
-        } else {
-          return []; // Return empty array if less than 3 characters are typed
-        }
-      })
-    ).subscribe((filteredStops: BusStop[]) => {
-      this.filteredFromStops = filteredStops;  // Store filtered from stops
-    });
-
+    // Subscribe to searchSubject to handle debounced search for both fields
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((searchTerm: string) => {
-        if (this.toLocation.length >= 3) {
-          return this.busDataService.searchBusStops(this.toLocation); // Fetch filtered to stops
-        } else {
-          return [];
-        }
+      switchMap(({ term, type }) => {
+        return term.length >= 3 ? this.busDataService.searchBusStops(term).pipe(
+          switchMap((filteredStops: BusStop[]) => of({ filteredStops, type }))
+        ) : of({ filteredStops: [], type });
       })
-    ).subscribe((filteredStops: BusStop[]) => {
-      this.filteredToStops = filteredStops;  // Store filtered to stops
+    ).subscribe(({ filteredStops, type }) => {
+      // Update the correct list based on the 'type'
+      if (type === 'from') {
+        this.filteredFromStops = filteredStops;
+      } else {
+        this.filteredToStops = filteredStops;
+      }
     });
   }
 
-  // Method triggered when the "Search" button is clicked
+  // Trigger the search and display results when the search button is clicked
   onSearchButtonClick() {
+    // Validate input locations
     if (!this.fromLocation || !this.toLocation) {
-      return; // Don't search if locations are not provided
+      this.validationError = 'Both locations must be filled in.';
+      return;
+    }
+    if (this.fromLocation === this.toLocation) {
+      this.validationError = 'From and To locations cannot be the same.';
+      return;
     }
 
-    // Trigger the fetching of filtered bus stops for 'from' and 'to' locations
-    this.getFilteredRoutes();
+    // Check if entered locations are valid bus stops
+    const isValidFrom = this.isValidBusStop(this.fromLocation);
+    const isValidTo = this.isValidBusStop(this.toLocation);
+    
+    if (!isValidFrom) {
+      this.validationError = `The location "${this.fromLocation}" is not a valid bus stop in Festac.`;
+      return;
+    }
+    if (!isValidTo) {
+      this.validationError = `The location "${this.toLocation}" is not a valid bus stop in Festac.`;
+      return;
+    }
 
-    // Trigger the route search
+    this.validationError = ''; // Clear previous error
+    this.searchHistory.push(`From: ${this.fromLocation} To: ${this.toLocation}`);
+    this.isLoading = true;
     this.searchRoutes();
   }
 
-  // Method to trigger the search for routes
+  // Check if a given location is a valid bus stop
+  private isValidBusStop(location: string): boolean {
+    return this.filteredFromStops.some(stop => stop.name.toLowerCase() === location.toLowerCase()) ||
+           this.filteredToStops.some(stop => stop.name.toLowerCase() === location.toLowerCase()) ||
+           this.busDataService.isValidBusStop(location); // Call the new method
+  }
+
+  openHistoryModal() {
+    const modal = new bootstrap.Modal(document.getElementById('historyModal'));
+    modal.show();
+  }
+
+  // Perform the route search and update the results
   searchRoutes() {
     const currentTime = new Date();
-    const journeyDuration = 35; // Example: 35 minutes (this can be dynamic based on routes)
-    const dropOffTime = new Date(currentTime.getTime() + journeyDuration * 60000);
+    const defaultDuration = 35;
 
-    this.journeyResults = {
+    this.busDataService.searchRoutes(this.fromLocation, this.toLocation).subscribe(
+      (routes: any[]) => {
+        this.isLoading = false;
+        if (routes && routes.length > 0) {
+          this.filteredRoutes = routes;
+          const firstRoute = routes[0];
+          this.journeyResults = this.formatJourneyResults(firstRoute.duration, currentTime);
+          this.scrollToJourneyInfo();
+        } else {
+          this.filteredRoutes = [];
+          this.journeyResults = this.formatJourneyResults(defaultDuration, currentTime);
+        }
+      },
+      (error) => {
+        console.error('Error fetching routes:', error);
+        this.isLoading = false;
+        this.filteredRoutes = [];
+      }
+    );
+  }
+
+  // Format journey results
+  formatJourneyResults(duration: number, currentTime: Date) {
+    const dropOffTime = new Date(currentTime.getTime() + duration * 60000);
+    return {
       arrivalTime: currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       dropOffTime: dropOffTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      formattedDuration: `Your journey will take approximately ${journeyDuration} minutes and you are expected to arrive by ${dropOffTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`
+      formattedDuration: `Your journey will take approximately ${duration} minutes, arriving by ${dropOffTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`
     };
-
-    // Ensure this method filters routes based on `fromLocation` and `toLocation`
-    this.busDataService.searchRoutes(this.fromLocation, this.toLocation).subscribe((routes: any[]) => {
-      if (routes && routes.length > 0) {
-        this.filteredRoutes = routes;  // Set the filtered routes
-      } else {
-        this.filteredRoutes = [];  // No results found, clear the array
-      }
-    }, (error) => {
-      console.error('Error fetching routes:', error);
-      this.filteredRoutes = [];  // Handle any errors by clearing the results
-    });
   }
 
-  // Method to handle the selection of a bus stop from the 'from' location suggestions
-  selectFromStop(stopName: string) {
-    this.fromLocation = stopName;
-    this.filteredFromStops = [];  // Clear suggestions after selecting
+  scrollToJourneyInfo() {
+    if (this.journeyInfoSection) {
+      this.journeyInfoSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
-  // Method to handle the selection of a bus stop from the 'to' location suggestions
-  selectToStop(stopName: string) {
-    this.toLocation = stopName;
-    this.filteredToStops = [];  // Clear suggestions after selecting
-  }
-
-  // Method to handle input for 'fromLocation'
-  onFromLocationInput() {
-    if (this.fromLocation.length >= 3) {
-      this.busDataService.searchBusStops(this.fromLocation).subscribe((stops: BusStop[]) => {
-        this.filteredFromStops = stops;  // Set the filtered 'from' stops
-      });
+  // Select a bus stop for "From" or "To" location
+  selectStop(stopName: string, type: 'from' | 'to') {
+    if (type === 'from') {
+      this.fromLocation = stopName;
+      this.filteredFromStops = [];
     } else {
-      this.filteredFromStops = [];  // Clear filtered stops if less than 3 characters
+      this.toLocation = stopName;
+      this.filteredToStops = [];
     }
   }
 
-  // Method to handle input for 'toLocation'
-  onToLocationInput() {
-    if (this.toLocation.length >= 3) {
-      this.busDataService.searchBusStops(this.toLocation).subscribe((stops: BusStop[]) => {
-        this.filteredToStops = stops;  // Set the filtered 'to' stops
+  // Handle input for both "From" and "To" locations
+  onLocationInput(type: 'from' | 'to') {
+    const term = type === 'from' ? this.fromLocation : this.toLocation;
+    this.searchSubject.next({ term, type });
+  }
+
+  // Clear the search results and reset the fields
+  clearResults() {
+    this.fromLocation = '';
+    this.toLocation = '';
+    this.journeyResults = null;
+    this.filteredRoutes = [];
+    this.filteredFromStops = [];
+    this.filteredToStops = [];
+    this.validationError = ''; // Clear error message on reset
+  }
+
+  // Navigate to the route page with journey details
+  navigateToRoute() {
+    if (this.journeyResults) {
+      this.router.navigate(['/route'], {
+        queryParams: {
+          from: this.fromLocation,
+          to: this.toLocation,
+          arrivalTime: this.journeyResults.arrivalTime,
+          dropOffTime: this.journeyResults.dropOffTime,
+          duration: this.journeyResults.formattedDuration,
+        },
       });
-    } else {
-      this.filteredToStops = [];  // Clear filtered stops if less than 3 characters
     }
   }
 
-  // Method to retrieve filtered bus stops based on the 'fromLocation' and 'toLocation' inputs
-  getFilteredRoutes() {
-    // Only fetch filtered bus stops if the inputs have 3 or more characters
-    if (this.fromLocation.length >= 3) {
-      this.busDataService.searchBusStops(this.fromLocation).subscribe((stops: BusStop[]) => {
-        this.filteredFromStops = stops;  // Assign the filtered 'from' stops to the array
-      });
+  // Delete a specific history item
+  deleteHistoryItem(index: number) {
+    if (index > -1 && index < this.searchHistory.length) {
+      this.searchHistory.splice(index, 1); // Remove the item from history
     }
+  }
 
-    if (this.toLocation.length >= 3) {
-      this.busDataService.searchBusStops(this.toLocation).subscribe((stops: BusStop[]) => {
-        this.filteredToStops = stops;  // Assign the filtered 'to' stops to the array
-      });
-    }
+  // Clear all history
+  clearAllHistory() {
+    this.searchHistory = []; // Clear the entire history
   }
 }

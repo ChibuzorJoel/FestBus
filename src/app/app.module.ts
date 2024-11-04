@@ -10,9 +10,10 @@ import { HeaderComponent } from './pages/header/header.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteComponent } from './pages/route/route.component';
 import { ReportComponent } from './pages/report/report.component';
-
 import { ReactiveFormsModule } from '@angular/forms';  // Import ReactiveFormsModule
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule for the service
+import { HttpClientModule } from '@angular/common/http';
+import { BusInfoComponent } from './pages/bus-info/bus-info.component';
+import { ContactComponent } from './pages/contact/contact.component'; // Import HttpClientModule for the service
 
 
 
@@ -25,6 +26,9 @@ import { HttpClientModule } from '@angular/common/http'; // Import HttpClientMod
     HeaderComponent,
     RouteComponent,
     ReportComponent,
+    BusInfoComponent,
+    ContactComponent,
+    
     
   
   ],

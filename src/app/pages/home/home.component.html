@@ -1,118 +1,155 @@
+<div class="container-fluid mt-2 py-1 my-2" style="background-color: #013220;">
+    <div class="navbar-brand text-white d-block fs-1 ms-5">
+        <span>FestBus</span>
+    </div>
 
-
-<div class="container-fluid mt-2 bg-success py-1 my-2">
-    <h1 class="text-center text-white">Welcome to FestBus</h1>
-    
-    <div class="container-fluid mt-4">
-      <h3 class="text-center text-white pd-5">Map Showing Your Current Location</h3>
-      </div>
-      <div class="row">
+    <!-- Section: Map -->
+    <div class="row">
         <div class="col-12">
-          <div class="map-container" id="map">
-            
-          </div>
+            <div class="map-container" id="map"></div>
         </div>
-      </div>
-
-      <!-- Search Bar Section -->
-  <div class="row mt-3">
-    <div class="col-12">
-      <div class="input-group">
-        <input type="text" (input)="search($event)" placeholder="Search for a location..." class="form-control">
-        <button class="btn btn-primary" type="button">Search</button>
-      </div>
     </div>
-  </div>  
 
-
-
-  <!-- Current Bus Stop Information -->
-  <div class="container-fluid mt-4">
-    <!-- Current Bus Stop Section -->
-    <div class="current-bus-stop bg-dark text-white p-3 rounded">
-        <h5 >Current Bus Stop</h5>
-        <div class="d-flex align-items-center mt-2">
-            <i class="fas fa-map-marker-alt fa-2x"></i>
-            <div class="ms-3">
-                <p class="mb-0">Festac Town, Lagos</p>
-                <small>Festac 23 Road</small>
-            </div>
-        </div>
-        <div class="bus-details mt-3 d-flex justify-content-between">
-            <div>
-                <span class="badge bg-primary">BRT</span>
-                <span class="badge bg-danger">17</span>
-                <span class="badge bg-secondary">6 mins</span>
-            </div>
-            <div>
-                <i class="fas fa-bell"></i>
+    <!-- Section: Search Bar -->
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="input-group">
+                <input type="text" (input)="search($event)" placeholder="Search for a location..." class="form-control">
+                <button class="btn btn-primary" type="button">Search</button>
             </div>
         </div>
     </div>
 
-    <!-- Nearby Bus Stops Section -->
-    <div class="nearby-bus-stops mt-4 text-white">
-        <h5>Nearby Stops</h5>
+    <!-- Section: Current Bus Stop -->
+    <div class="container-fluid mt-4">
+        <div class="current-bus-stop bg-gradient text-white p-4 rounded shadow-lg">
+            <h5 class="mb-3">Current Bus Stop</h5>
+            <div class="d-flex align-items-center">
+                <i class="fas fa-map-marker-alt fa-2x"></i>
+                <div class="ms-3">
+                    <p class="mb-0">Festac Town, Lagos</p>
+                    <small>Festac 23 Road</small>
+                </div>
+            </div>
+            <div class="bus-details mt-3 d-flex justify-content-between align-items-center">
+                <div class="badge-group">
+                    <span class="badge bg-primary">BRT</span>
+                    <span class="badge bg-danger">17</span>
+                    <span class="badge bg-secondary">6 mins</span>
+                </div>
+                <div><i class="fas fa-bell"></i></div>
+            </div>
+        </div>
 
-        <!-- First Bus Stop -->
-        <div class="nearby-stop bg-dark text-white p-3 mt-2 rounded d-flex justify-content-between align-items-center">
-            <div>
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-map-marker-alt fa-lg"></i>
-                    <div class="ms-3">
-                        <p class="mb-0">Festac Avenue</p>
-                        <small>towards 1st Gate</small>
+        <!-- Section: Buttons for Report and Contact -->
+        <div class="d-flex justify-content-between mt-3">
+            <button class="contact-btn btn btn-primary" onclick="location.href='report'">Report</button>
+            <button class="report-btn btn btn-danger" onclick="location.href='contact'">Contact</button>
+           
+        </div>
+
+        <!-- Section: Nearby Bus Stops -->
+        <div class="nearby-bus-stops mt-4 text-white">
+            <h5 class="mb-4">Nearby Stops</h5>
+
+            <!-- First Bus Stop -->
+            <div class="nearby-stop card bg-dark text-white p-4 mb-3 shadow-sm hover-effect">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                        <div class="ms-3">
+                            <p class="mb-0">Festac Avenue</p>
+                            <small>towards 1st Gate</small>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge bg-danger">45</span>
+                        <span class="badge bg-secondary">N5</span>
                     </div>
                 </div>
-                <div class="mt-2">
-                    <span class="badge bg-danger">45</span>
-                    <span class="badge bg-secondary">N5</span>
+                <div class="mt-3 text-right">
+                    <p class="mb-0">10 min</p>
                 </div>
             </div>
-            <div>
-                <p class="mb-0">10 min</p>
+
+            <!-- Second Bus Stop -->
+            <div class="nearby-stop card bg-dark text-white p-4 mb-3 shadow-sm hover-effect">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                        <div class="ms-3">
+                            <p class="mb-0">Festac Junction</p>
+                            <small>towards Mile 2</small>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary">BRT</span>
+                        <span class="badge bg-warning">22</span>
+                    </div>
+                </div>
+                <div class="mt-3 text-right">
+                    <p class="mb-0">15 min</p>
+                </div>
+            </div>
+
+            <!-- Third Bus Stop -->
+            <div class="nearby-stop card bg-dark text-white p-4 mb-3 shadow-sm hover-effect">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                        <div class="ms-3">
+                            <p class="mb-0">1st Avenue</p>
+                            <small>towards Alakija</small>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge bg-danger">60</span>
+                        <span class="badge bg-secondary">B4</span>
+                    </div>
+                </div>
+                <div class="mt-3 text-right">
+                    <p class="mb-0">8 min</p>
+                </div>
+            </div>
+            <!-- Fourth Bus Stop -->
+<div class="nearby-stop card bg-dark text-white p-4 mb-3 shadow-sm hover-effect">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-map-marker-alt fa-lg"></i>
+            <div class="ms-3">
+                <p class="mb-0">2nd Avenue</p>
+                <small>towards 3rd Gate</small>
             </div>
         </div>
-
-       
- <!-- Second Bus Stop -->
- <div class="nearby-stop bg-dark text-white p-3 mt-2 rounded d-flex justify-content-between align-items-center">
-  <div>
-      <div class="d-flex align-items-center">
-          <i class="fas fa-map-marker-alt fa-lg"></i>
-          <div class="ms-3">
-              <p class="mb-0">Festac Junction</p>
-              <small>towards Mile 2</small>
-          </div>
-      </div>
-      <div class="mt-2">
-          <span class="badge bg-primary">BRT</span>
-          <span class="badge bg-warning">22</span>
-      </div>
-  </div>
-  <div>
-      <p class="mb-0">15 min</p>
-  </div>
+        <div>
+            <span class="badge bg-primary">BRT</span>
+            <span class="badge bg-warning">11</span>
+        </div>
+    </div>
+    <div class="mt-3 text-right">
+        <p class="mb-0">12 min</p>
+    </div>
 </div>
 
-<!-- Third Bus Stop -->
-<div class="nearby-stop bg-dark text-white p-3 mt-2 mb-5  rounded d-flex justify-content-between align-items-center">
-  <div>
-      <div class="d-flex align-items-center">
-          <i class="fas fa-map-marker-alt fa-lg"></i>
-          <div class="ms-3">
-              <p class="mb-0">1st Avenue</p>
-              <small>towards Alakija</small>
-          </div>
-      </div>
-      <div class="mt-2">
-          <span class="badge bg-danger">60</span>
-          <span class="badge bg-secondary">B4</span>
-      </div>
-  </div>
-  <div>
-      <p class="mb-0">8 min</p>
-  </div>
+<!-- Fifth Bus Stop -->
+<div class="nearby-stop card bg-dark text-white p-4 mb-5 shadow-sm hover-effect">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-map-marker-alt fa-lg"></i>
+            <div class="ms-3">
+                <p class="mb-0">3rd Avenue</p>
+                <small>towards Amuwo Odofin</small>
+            </div>
+        </div>
+        <div>
+            <span class="badge bg-danger">27</span>
+            <span class="badge bg-secondary">M1</span>
+        </div>
+    </div>
+    <div class="mt-3 text-right">
+        <p class="mb-0">20 min</p>
+    </div>
 </div>
+        </div>
     </div>
 </div>

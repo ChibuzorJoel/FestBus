@@ -1,8 +1,8 @@
 export interface BusStop {
-  id: number;
+  id: number; 
   name: string;
-  location: {
-    lat: number;
-    lng: number;
-  };
+  avenue: string;
+  lat: number;
+  lng: number;
+  buses: string[];  // Add buses array to BusStop interface
 }

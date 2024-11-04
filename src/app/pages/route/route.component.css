@@ -1,10 +1,202 @@
+#map { 
+  height: 800px; 
+}
+
+/* Route Details Styling */
+.route-details {
+  background-color: #013220;
+  border-radius: 5px;
+}
+/* General container styles */
+.container-fluid {
+  background-color: #013220; /* Main background color */
+}
+
+/* Map container styles */
 .map-container {
-    height: 400px;
-    width: 100%;
-    border: 2px solid #ccc;
-    margin-bottom: 20px;
+  height: 400px; /* Set a fixed height for the map */
+  border-radius: 8px; /* Rounded corners */
+  overflow: hidden; /* Prevent overflow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+}
+
+/* Card styles */
+.card {
+  border-radius: 10px; /* Rounded corners for cards */
+}
+
+.card-header {
+  background-color: #1a3d2e; /* Darker header background */
+}
+
+.card-body {
+  padding: 20px; /* Increased padding for content */
+}
+
+/* List styles for stops */
+#route-stops li {
+  padding: 10px 0; /* Vertical padding for list items */
+}
+
+#route-stops li:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hover effect for list items */
+}
+
+/* Icon styles */
+.fas {
+  color: #4caf50; /* Icon color */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .navbar-brand {
+      font-size: 1.5rem; /* Adjust font size for mobile */
   }
-  #routeMap { 
-    height: 1080px; 
+}
+.navbar-brand {
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 700;
+}
+
+/* Map Styling */
+.map-container {
+  height: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Styling */
+.route-card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.route-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+#route-stops li:hover,
+#route-instructions li:hover {
+    background-color: #025f28;
+    color: #ffffff;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    padding: 10px;
+}
+#route-stops li:hover i,
+#route-instructions li:hover i {
+    color: #ffcc00;
+}
+.route-card .card-header {
+  background-color: #006d3a;
+  font-weight: 600;
+}
+.route-info p {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+.route-info i {
+  margin-right: 8px;
+}
+
+/* Stops and Instructions List */
+#route-stops, #route-instructions {
+  padding-left: 0;
+}
+.instruction-item, #route-stops li {
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.instruction-item p, #route-stops li div {
+  margin: 0;
+  font-weight: 500;
+}
+.instruction-item small {
+  font-size: 0.85rem;
+}
+
+/* Typography */
+.text-white {
+  color: #f8f9fa !important;
+}
+/* General mobile adjustments */
+@media (max-width: 768px) {
+  .container-fluid {
+      padding: 0 15px; /* Reduce padding on mobile */
   }
- 
+
+  .navbar-brand {
+      font-size: 1.75rem; /* Adjust font size for smaller screens */
+  }
+
+  h2 {
+      font-size: 1.5rem; /* Smaller title font for mobile */
+  }
+
+  #map {
+      height: 300px; /* Reduce map height for mobile */
+  }
+
+  /* Reduce padding in cards for mobile */
+  .card-body {
+      padding: 15px;
+  }
+
+  .route-info p {
+      font-size: 0.9rem; /* Slightly smaller font for route info */
+  }
+
+  .instruction-item, #route-stops li {
+      flex-direction: column; /* Stack items vertically */
+      align-items: flex-start;
+  }
+
+  .instruction-item p, #route-stops li div {
+      font-size: 0.9rem; /* Reduce font size for mobile */
+  }
+
+  /* Smaller font for additional details */
+  .instruction-item small {
+      font-size: 0.8rem;
+  }
+
+  /* Reduce padding and margins in lists */
+  #route-stops li, .instruction-item {
+      padding: 8px 0;
+  }
+}
+
+/* Extra small screens (max-width: 576px) */
+@media (max-width: 576px) {
+  .navbar-brand {
+      font-size: 1.5rem; /* Further reduce font size */
+  }
+
+  h2 {
+      font-size: 1.25rem; /* Smaller heading on very small screens */
+  }
+
+  #map {
+      height: 250px; /* Reduce map height further */
+  }
+
+  .route-info p, .instruction-item p, #route-stops li div {
+      font-size: 0.85rem; /* Slightly smaller font for readability */
+  }
+
+  .card-body {
+      padding: 10px; /* Reduce padding for better spacing */
+  }
+}
+
+/* Additional hover and transition styling for a smooth experience on mobile */
+.route-card:hover {
+  transform: none; /* Remove lift effect for mobile */
+  box-shadow: none; /* Simplify shadow on mobile */
+}

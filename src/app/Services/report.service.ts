@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ReportService {
 
 
-  private apiUrl = 'https://your-backend-api-url.com/report';  // Replace with your backend API endpoint
+  private apiUrl = 'https://angularhttpclient-f1d30-default-rtdb.firebaseio.com/log.json';  // Replace with your backend API endpoint
 
   constructor(private http: HttpClient) { }
 
