@@ -1,21 +1,21 @@
-<div class="container-fluid bus-info-page mt-2" style="background-color: #013220;">
+<div class="container-fluid bus-info-page mt-2">
   <div class="navbar-brand text-white d-block fs-1 ms-5">
     <span>FestBus</span>
-</div>
+  </div>
 
-    <!-- Bus Information Header -->
-    <div class="location-section py-4 text-white">
-      <h3 class="text-center text-white fw-bold">Search Bus Numbers</h3>
-    </div>
-  
-    <!-- Bus Number Input -->
-    <div class="row mb-4 search-inputs py-3">
-      <div class="col-md-12 position-relative">
-        <label for="busNumber" class="text-white fw-semibold mb-2">Bus Number:</label>
-        <div class="input-group">
-          <span class="input-group-text bg-secondary text-white">
-            <i class="fas fa-bus"></i> <!-- Bus icon -->
-          </span>
+  <!-- Bus Information Header -->
+  <div class="location-section py-4 text-white">
+    <h3 class="text-center fw-bold">Search Bus Numbers</h3>
+  </div>
+
+  <!-- Bus Number Input Container -->
+  <div class="row mb-4 search-inputs-container py-3">
+    <div class="col-md-6 mx-auto input-container">
+      <label for="busNumber" class="text-white fw-semibold mb-2">Bus Number:</label>
+      <div class="input-group">
+        <span class="input-group-text bg-secondary text-white">
+          <i class="fas fa-bus"></i>
+        </span>
         <input 
           type="text" 
           id="busNumber" 
@@ -27,38 +27,39 @@
           required>
       </div>
     </div>
-  
-    <!-- Loading Spinner -->
-    <div *ngIf="isLoading" class="spinner-border text-white mt-3" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  
-    <!-- Bus Stops Results Section -->
-    <div *ngIf="filteredBusStops.length > 0" class="mt-4">
-      <h3 class="text-white">Bus Stops</h3>
-      <div class="container-fluid bus-stops-section py-3">
-        <div class="bus-stop-card mb-4 bg-dark text-white p-4 rounded shadow-lg" *ngFor="let stop of filteredBusStops">
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="stop-info">
-              <i class="fas fa-map-marker-alt text-warning"></i>
-              <span class="stop-name fw-semibold">{{ stop.name }}</span>
-            </div>
-            <div class="buses-info">
-              <i class="fas fa-bus text-primary"></i> 
-              <span class="fw-semibold">Buses: {{ stop.buses.join(', ') }}</span>
-            </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="spinner-border text-white mt-3" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <!-- Bus Stops Results Section -->
+  <div *ngIf="filteredBusStops.length > 0" class="mt-4">
+    <h3 class="text-white">Bus Stops</h3>
+    <div class="container-fluid bus-stops-section py-3">
+      <div class="bus-stop-card mb-4 bg-dark text-white p-3 rounded shadow-lg" *ngFor="let stop of filteredBusStops">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="stop-info">
+            <i class="fas fa-map-marker-alt text-warning"></i>
+            <span class="stop-name fw-semibold">{{ stop.name }}</span>
+          </div>
+          <div class="buses-info">
+            <i class="fas fa-bus text-primary"></i> 
+            <span class="fw-semibold">Buses: {{ stop.buses.join(', ') }}</span>
           </div>
         </div>
       </div>
     </div>
-  
-    <!-- No Results Found -->
-    <div *ngIf="filteredBusStops.length === 0 && busNumber.length > 0" class="mt-4">
-      <h4 class="text-white">No bus stops found for "{{ busNumber }}".</h4>
-    </div>
-  
-    <!-- Clear Results Button -->
-    <div *ngIf="filteredBusStops.length > 0" class="mt-4">
-      <button class="btn btn-primary mb-4 w-100" (click)="clearResults()">Clear Results</button>
-    </div>
   </div>
+
+  <!-- No Results Found -->
+  <div *ngIf="filteredBusStops.length === 0 && busNumber.length > 0" class="mt-4">
+    <h4 class="text-white">No bus stops found for "{{ busNumber }}".</h4>
+  </div>
+
+<!-- Clear Results Button -->
+<div *ngIf="filteredBusStops.length > 0" class="d-flex justify-content-center mt-4">
+  <button class="btn btn-primary clear-results-btn" (click)="clearResults()">Clear Results</button>
+</div>
+</div>

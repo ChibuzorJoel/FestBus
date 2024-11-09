@@ -1,5 +1,9 @@
-<div class="container-fluid mt-3 p-4 rounded" style="background-color: #013220; color: white;">
+<div class="container-fluid mt-4 text-white p-4 rounded" style="background-color: #013220; color: white;">
+  <div class="text-center mb-4">
+    <span class="navbar-brand fs-1 text-white">FestBus</span>
+  </div>
     <h2 class="text-center mb-4">Contact Us</h2>
+    <div class="form-container" style="max-width: 600px; margin: auto; ">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
       <!-- Name Field -->
       <div class="mb-3">
@@ -48,9 +52,11 @@
       </div>
   
       <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary w-100">Submit</button>
+       <div class="text-center  mb-4">
+      <button type="submit" class="btn btn-success btn-sm py-4 px-5">Submit</button>
+      </div>
     </form>
-  
+    </div>
     <!-- Success Message -->
     <div *ngIf="submitted && success" class="alert alert-success mt-3">
       Your message has been sent successfully!

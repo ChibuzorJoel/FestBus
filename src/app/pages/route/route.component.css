@@ -46,6 +46,18 @@
 .fas {
   color: #4caf50; /* Icon color */
 }
+.navbar-brand span {
+  display: inline-block; /* Allow for transform on hover */
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  cursor: pointer;
+}
+
+.navbar-brand:hover {
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+}
 
 /* Responsive adjustments */
 @media (max-width: 576px) {
@@ -199,4 +211,12 @@
 .route-card:hover {
   transform: none; /* Remove lift effect for mobile */
   box-shadow: none; /* Simplify shadow on mobile */
+}
+.nearby-stop:hover {
+  background-color: #000000;
+  color: #b2b2b2;
+  cursor: pointer;
+  transform: scale(1.02);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

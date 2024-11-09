@@ -1,17 +1,35 @@
 .navbar-brand {
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-    cursor: pointer; /* Change cursor to pointer for better UX */
-  }
-  
-  .navbar-brand span {
-    display: inline-block; /* Allow for transform on hover */
-    font-style: italic;
-      font-family: Georgia, 'Times New Roman', Times, serif;
-  }
-  
-  /* Hover effect */
-  .navbar-brand:hover {
-    color: #FFD700; /* Change color on hover (gold) */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
-    transform: scale(1.1); /* Slightly increase the size */
-  }
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  cursor: pointer; /* Change cursor to pointer for better UX */
+}
+
+.navbar-brand span {
+  display: inline-block; /* Allow for transform on hover */
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+/* Hover effect */
+.navbar-brand:hover {
+  color: #FFD700; /* Change color on hover (gold) */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+  transform: scale(1.1); /* Slightly increase the size */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 25px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Form Container Styling */
+.form-container {
+  background-color: #1c3f3f; /* Slightly lighter background for the form */
+  padding: 20px; /* Add padding for inner spacing */
+  border-radius: 8px; /* Round the corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}

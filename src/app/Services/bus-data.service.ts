@@ -184,6 +184,23 @@ export class BusDataService {
         catchError(this.handleError)
       );
   }
+  getBusNumbersForRoutes(fromLocation: string, toLocation: string): Observable<{ shortRouteBuses: string[], longRouteBuses: string[] }> {
+    if (!fromLocation || !toLocation) {
+      return of({ shortRouteBuses: [], longRouteBuses: [] }); // Return empty if no location is provided
+    }
+
+    const shortRouteBuses = this.localBusStops.filter(stop =>
+      stop.name.toLowerCase() === fromLocation.toLowerCase() &&
+      stop.buses.some(bus => bus === '29') // Example: Assume '29' follows a shorter route
+    ).map(stop => stop.buses).flat();
+
+    const longRouteBuses = this.localBusStops.filter(stop =>
+      stop.name.toLowerCase() === fromLocation.toLowerCase() &&
+      stop.buses.some(bus => bus === '45') // Example: Assume '45' follows a longer route
+    ).map(stop => stop.buses).flat();
+
+    return of({ shortRouteBuses, longRouteBuses });
+  }
 
   /**
    * Error handling method for HTTP requests.

@@ -1,71 +1,94 @@
-/* Cursor change for clickable elements */
-.navbar-brand,
-.btn,
-.bus-stop-card {
-  cursor: pointer; /* Change cursor to pointer for better UX */
-  transition: transform 0.3s ease; /* Smooth transition for hover effects */
-}
-
-/* Navbar brand hover effect */
-.navbar-brand:hover {
-  color: #FFD700; /* Change color on hover (gold) */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
-  transform: scale(1.1); /* Slightly increase the size */
-}
-
-/* Bus stop card hover effect */
-.bus-stop-card:hover {
-  transform: translateY(-5px); /* Slightly lift the card on hover */
-}
-
-/* Button hover effect */
-.btn:hover {
-  background-color: #0056b3; /* Change background on hover */
-  border-color: #0056b3; /* Change border color on hover */
-  transform: scale(1.02); /* Slightly increase size */
-}
-
-/* General styles */
+/* Page Styling */
 .bus-info-page {
-  margin: 20px;
-  margin: 10px;
   background-color: #013220;
-color: #ffffff;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
 }
 
-.search-inputs {
-  margin-bottom: 20px;
+/* Navbar Brand */
+.navbar-brand span {
+  display: inline-block; /* Allow for transform on hover */
+  font-style: italic;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  cursor: pointer;
 }
 
-input {
-  width: 100%;
+.navbar-brand:hover {
+  color: #FFD700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+}
+
+/* Input Container Styling */
+.input-container {
+  background-color: #1c3f3f; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Input Styling */
+.custom-input {
+  font-size: 1rem;
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc; /* Border for input */
-  border-radius: 5px; /* Rounded corners */
+  border: none;
+  border-radius: 5px;
 }
 
+.custom-input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.8); /* Gold glow */
+}
+
+/* Input Group Icon Styling */
+.input-group-text {
+  border-radius: 0 5px 5px 0;
+}
+
+/* Button Styling */
+.clear-results-btn {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  font-size: 0.8rem;       /* Smaller font size */
+  padding: 6px 12px;       /* Smaller padding */
+  width: auto;             /* Remove full-width */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.clear-results-btn:hover {
+  background-color: #004494;
+  transform: scale(1.05);  /* Slight increase on hover */
+}
+
+/* Card Styling */
+.bus-stop-card {
+  background-color: #212529;
+  border-radius: 8px;
+  padding: 16px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.bus-stop-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Spinner Centering */
 .spinner-border {
   display: block;
   margin: 20px auto;
 }
 
-.no-results {
-  color: #ff6666;
-}
-
-.clear-results {
-  margin-top: 10px;
-}
-
-/* Media Queries for responsiveness */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
- 
-  .search-inputs {
-    margin-bottom: 10px;
+  .navbar-brand {
+    font-size: 2rem;
   }
-
-  input {
-    font-size: 12px; /* Slightly smaller font on mobile */
+  .custom-input {
+    font-size: 0.85rem;
+  }
+  .clear-results-btn {
+    font-size: 0.85rem;
   }
 }

@@ -1,140 +1,147 @@
-<div class="container-fluid search-results-page mt-2" style="background-color: #013220; min-height: 100vh;">
-  <div class="navbar-brand text-white d-block fs-1 ms-4">
+<div class="container-fluid search-results-page mt-2">
+  <div class="navbar-brand text-white fs-1 ms-5">
     <span>FestBus</span>
   </div>
   
   <!-- Location and Search Header -->
   <div class="location-section py-3 text-center">
-    <h3 class="text-white fw-bold mb-0">Search Bus Routes</h3>
-    <span class="text-light mt-1 d-block">Festac Town</span>
+    <h3 class="fw-bold mb-0 text-white">Search Bus Routes</h3>
+    <span class="text-muted mt-1 d-block">Festac Town</span>
   </div>
-  
+
   <!-- Form for Search -->
-  <form (ngSubmit)="onSearchButtonClick()" #searchForm="ngForm" class="bg-dark p-4 mt-4 rounded shadow-sm">
-    <div class="row mb-3">
-      
+  <div class="search-form-container p-4 mt-4 rounded shadow-sm">
+    <form (ngSubmit)="onSearchButtonClick()" #searchForm="ngForm" class="d-flex align-items-center">
       <!-- From Location -->
-      <div class="col-md-6 mb-3 search-inputs">
-        <label for="from" class="fw-semibold text-white">From:</label>
+      <div class="me-2 position-relative">
+        <label for="from" class="visually-hidden">From:</label>
         <input 
           type="text" 
           id="from" 
           [(ngModel)]="fromLocation" 
           name="fromLocation" 
           class="form-control form-control-lg" 
-          placeholder="Enter start location" 
+          placeholder="From" 
           (input)="onLocationInput('from')"
           #fromControl="ngModel"
           minlength="3" 
-          required>
-        
-        <!-- Validation Message -->
-        <div *ngIf="fromControl.invalid && fromControl.touched" class="text-danger mt-1">
-          <small *ngIf="fromControl.errors?.['required']">From location is required.</small>
-          <small *ngIf="fromControl.errors?.['minlength']">Minimum 3 characters required.</small>
-        </div>
-
-        <ul *ngIf="filteredFromStops.length > 0" class="list-group mt-2">
-          <li *ngFor="let stop of filteredFromStops" class="list-group-item" (click)="selectStop(stop.name, 'from')">
-            {{ stop.name }}
-          </li>
-        </ul>
+          required> 
+       <!-- Validation Message -->
+       <div *ngIf="fromControl.invalid && fromControl.touched" class="text-danger mt-1">
+        <small *ngIf="fromControl.errors?.['required']">From location is required.</small>
+        <small *ngIf="fromControl.errors?.['minlength']">Minimum 3 characters required.</small>
       </div>
+
+      <ul *ngIf="filteredFromStops.length > 0" class="list-group mt-2">
+        <li *ngFor="let stop of filteredFromStops" class="list-group-item" (click)="selectStop(stop.name, 'from')">
+          {{ stop.name }}
+        </li>
+      </ul>
+    </div>
       
       <!-- To Location -->
-      <div class="col-md-6 mb-3">
-        <label for="to" class="fw-semibold text-white">To:</label>
+      <div class="flex-fill me-2 position-relative">
+        <label for="to" class="visually-hidden">To:</label>
         <input 
           type="text" 
           id="to" 
           [(ngModel)]="toLocation" 
           name="toLocation" 
           class="form-control form-control-lg" 
-          placeholder="Enter destination" 
+          placeholder="To" 
           (input)="onLocationInput('to')"
           #toControl="ngModel"
           minlength="3" 
-          required>
-        
-        <!-- Validation Message -->
-        <div *ngIf="toControl.invalid && toControl.touched" class="text-danger mt-1">
-          <small *ngIf="toControl.errors?.['required']">To location is required.</small>
-          <small *ngIf="toControl.errors?.['minlength']">Minimum 3 characters required.</small>
+          required
+          >
+       
+       <!-- Validation Message -->
+       <div *ngIf="toControl.invalid && toControl.touched" class="text-danger mt-1">
+        <small *ngIf="toControl.errors?.['required']">To location is required.</small>
+        <small *ngIf="toControl.errors?.['minlength']">Minimum 3 characters required.</small>
+      </div>
+
+      <ul *ngIf="filteredToStops.length > 0" class="list-group mt-2">
+        <li *ngFor="let stop of filteredToStops" class="list-group-item" (click)="selectStop(stop.name, 'to')">
+          {{ stop.name }}
+        </li>
+      </ul>
+    </div>
+
+      <!-- Search Icon as Button -->
+      <button type="submit" class="btn btn-primary btn-lg d-flex align-items-center px-3" [disabled]="searchForm.invalid">
+        <i class="fas fa-search"></i>
+      </button>
+    
+    </form>
+    <div *ngIf="validationError" class="alert alert-danger mt-3">
+      {{ validationError }}
+    </div>
+  
+    <!-- History Button -->
+    <div class="d-flex justify-content-end mt-3">
+      <button class="btn btn-dark btn-lg history-icon" (click)="openHistoryModal()" aria-label="View Search History">
+        <i class="fas fa-history"></i>
+      </button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="text-center mt-4">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Journey Information Section -->
+    <div *ngIf="journeyResults" class="mt-5" id="journey-info">
+      <h3 class="text-white">Journey Information</h3>
+      <div class="bg-dark text-white rounded shadow-sm p-4 mb-4 journey-card">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <p class="mb-0"><strong>Expected Arrival:</strong> {{ journeyResults.arrivalTime }}</p>
+            <p class="mb-0"><strong>Journey Duration:</strong> {{ journeyResults.formattedDuration }}</p>
+          </div>
+          <p class="mb-0"><strong>Drop-off Time:</strong> {{ journeyResults.dropOffTime }}</p>
         </div>
-
-        <ul *ngIf="filteredToStops.length > 0" class="list-group mt-2">
-          <li *ngFor="let stop of filteredToStops" class="list-group-item" (click)="selectStop(stop.name, 'to')">
-            {{ stop.name }}
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="d-grid gap-2">
-      <button type="submit" class="btn btn-primary btn-lg" [disabled]="searchForm.invalid">Search</button>
-    </div>
-  </form>
-  <div *ngIf="validationError" class="alert alert-danger">
-    {{ validationError }}
-  </div>
-  <!-- History Button -->
-  <div class="d-flex justify-content-end mt-3">
-    <button class="btn btn-outline-secondary btn-lg" (click)="openHistoryModal()">View Search History</button>
-  </div>
-
-  <!-- Loading Spinner -->
-  <div *ngIf="isLoading" class="text-center mt-4">
-    <div class="spinner-border text-primary" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
-
-  <!-- Journey Information Section -->
-  <div *ngIf="journeyResults" class="mt-5" id="journey-info">
-    <h3 class="text-white">Journey Information</h3>
-    <div class="bg-dark text-white rounded shadow-sm p-4 mb-4">
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <p class="mb-0"><strong>Expected Arrival:</strong> {{ journeyResults.arrivalTime }}</p>
-          <p class="mb-0"><strong>Journey Duration:</strong> {{ journeyResults.formattedDuration }}</p>
+        <div class="see-route mt-3">
+          <button class="btn btn-success" (click)="navigateToRoute()">See route</button>
         </div>
-        <p class="mb-0"><strong>Drop-off Time:</strong> {{ journeyResults.dropOffTime }}</p>
-      </div>
-      <div class="see-route mt-3">
-        <button class="btn btn-secondary" (click)="navigateToRoute()">See route</button>
       </div>
     </div>
-  </div>
 
-  <!-- No Results Found -->
-  <div *ngIf="filteredRoutes.length === 0 && !journeyResults" class="mt-5 text-center">
-    <h4 class="text-secondary">No routes found. Please adjust your search.</h4>
-  </div>
+    <!-- No Results Found -->
+    <div *ngIf="filteredRoutes.length === 0 && !journeyResults" class="mt-5 text-center">
+      <h4 class="text-muted">No routes found.</h4>
+    </div>
 
-  <!-- Clear Results Button -->
-  <div *ngIf="filteredRoutes.length > 0 || journeyResults" class="mt-4">
-    <button class="btn btn-secondary w-100" (click)="clearResults()">Clear Results</button>
+    <!-- Clear Results Button -->
+    <div *ngIf="filteredRoutes.length > 0 || journeyResults" class="text-center mt-3">
+      <button class="btn btn-success" (click)="clearResults()">Clear Results</button>
+    </div>
   </div>
 
   <!-- History Modal -->
-<div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="historyModalLabel">Search History</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ul class="list-group">
-          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let history of searchHistory; let i = index">
-            {{ history }}
-            <button class="btn btn-sm btn-danger" (click)="deleteHistoryItem(i)">Delete</button>
-          </li>
-        </ul>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" (click)="clearAllHistory()">Delete All</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="historyModalLabel">Search History</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let history of searchHistory; let i = index">
+              {{ history }}
+              <button class="btn btn-sm btn-danger" (click)="deleteHistoryItem(i)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" (click)="clearAllHistory()">Delete All</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

@@ -50,7 +50,7 @@ export class ReportComponent {
   // Call the service to submit the report
   this.reportService.submitReport(formData).subscribe({
     next: (response) => {
-      this.isSubmitting = false;
+      this.isSubmitting = true;
       this.successMessage = 'Your report has been submitted successfully!';
       this.errorMessage = '';  // Clear error message if any
       this.reportForm.reset(); // Reset form after successful submission

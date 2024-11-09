@@ -153,6 +153,10 @@ export class SearchComponent implements OnInit {
     } else {
       this.toLocation = stopName;
       this.filteredToStops = [];
+      // Automatically trigger search if both locations are set
+      if (this.fromLocation && this.toLocation) {
+        this.onSearchButtonClick();
+      }
     }
   }
 
@@ -160,6 +164,11 @@ export class SearchComponent implements OnInit {
   onLocationInput(type: 'from' | 'to') {
     const term = type === 'from' ? this.fromLocation : this.toLocation;
     this.searchSubject.next({ term, type });
+
+    // Automatically search if both "From" and "To" are entered
+    if (this.fromLocation.length >= 3 && this.toLocation.length >= 3) {
+      this.onSearchButtonClick();
+    }
   }
 
   // Clear the search results and reset the fields

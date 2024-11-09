@@ -99,7 +99,7 @@ button[type="button"] {
 
 /* Specific styling for square, bold contact and report buttons */
 .contact-btn, .report-btn {
-  border-radius: 0; /* Square shape */
+  border-radius: 0px; /* Square shape */
   font-weight: bold; /* Bold text */
-  padding: 10px 15px;
+  
 }
