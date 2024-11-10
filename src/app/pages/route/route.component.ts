@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ChangeDetectorRef } from '@angular/core';
+import { AfterViewInit, Component, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MapService } from 'src/app/Services/map.service';
 import 'leaflet-routing-machine';
 declare const L: any;
@@ -30,7 +31,9 @@ export class RouteComponent implements AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private mapService: MapService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2,
+    private router: Router
   ) {}
 
   ngAfterViewInit(): void {
@@ -40,7 +43,17 @@ export class RouteComponent implements AfterViewInit {
       this.getRouteCoordinates();
     });
   }
+  scrollToTop() {
+    this.renderer.selectRootElement('#top').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
+  onStopClick(from: string, to: string) {
+    // Set query parameters and navigate to the route page
+    this.router.navigate(['/route'], { queryParams: { from, to } }).then(() => {
+      // Scroll to top after navigating
+      this.scrollToTop();
+    });
+  }
   getRouteCoordinates() {
     const fromCoords$ = this.mapService.getCoordinatesForLocation(this.fromLocation);
     const toCoords$ = this.mapService.getCoordinatesForLocation(this.toLocation);
