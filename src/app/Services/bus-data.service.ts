@@ -33,7 +33,26 @@ export class BusDataService {
     { id: 20, name: 'Road 4', avenue: 'Road 4', lat: 6.4655, lng: 3.3065, buses: ['14', '35'] },
     { id: 21, name: 'Road 5', avenue: 'Road 5', lat: 6.4665, lng: 3.3020, buses: ['15', '33'] },
     { id: 22, name: 'Road 3', avenue: 'Road 3', lat: 6.4645, lng: 3.3050, buses: ['37', '24'] },
-    { id: 23, name: 'Road 2', avenue: 'Road 2', lat: 6.4630, lng: 3.2990, buses: ['50', '11'] }
+    { id: 23, name: 'Road 2', avenue: 'Road 2', lat: 6.4630, lng: 3.2990, buses: ['50', '11'] },
+    { id: 24, name: 'Main Street', avenue: '1st Avenue', lat: 6.4710, lng: 3.2915, buses: ['25', '37'] },
+  { id: 25, name: 'Central Park', avenue: '1st Avenue', lat: 6.4695, lng: 3.2885, buses: ['22', '34'] },
+{ id: 26, name: 'East Gate', avenue: '2nd Avenue', lat: 6.4600, lng: 3.2820, buses: ['21', '32'] },
+{ id: 27, name: 'South Park', avenue: '2nd Avenue', lat: 6.4595, lng: 3.2790, buses: ['26', '46'] },
+{ id: 28, name: 'North Plaza', avenue: '2nd Avenue', lat: 6.4625, lng: 3.2870, buses: ['15', '42'] },
+{ id: 29, name: 'Market Square', avenue: '5th Avenue', lat: 6.4700, lng: 3.3240, buses: ['31', '54'] },
+{ id: 30, name: '8th Road', avenue: '7th Avenue', lat: 6.4678, lng: 3.3338, buses: ['23', '43'] },
+{ id: 31, name: '10th Avenue', avenue: '10th Avenue', lat: 6.4699, lng: 3.3355, buses: ['11', '27'] },
+{ id: 32, name: 'Community Center', avenue: '6th Avenue', lat: 6.4680, lng: 3.3290, buses: ['17', '39'] },
+{ id: 33, name: 'Library Road', avenue: '7th Avenue', lat: 6.4658, lng: 3.3205, buses: ['16', '48'] },
+{ id: 34, name: 'Stadium Avenue', avenue: '3rd Avenue', lat: 6.4642, lng: 3.3180, buses: ['12', '40'] },
+{ id: 35, name: 'Hilltop Drive', avenue: 'Phase 2', lat: 6.4687, lng: 3.3075, buses: ['45', '60'] },
+{ id: 36, name: 'Riverbank Road', avenue: 'Phase 1', lat: 6.4667, lng: 3.3110, buses: ['28', '33'] },
+{ id: 37, name: 'Town Square', avenue: 'Festac Link', lat: 6.4635, lng: 3.3150, buses: ['30', '49'] },
+{ id: 38, name: '9th Close', avenue: '7th Avenue', lat: 6.4681, lng: 3.3278, buses: ['10', '55'] },
+{ id: 39, name: 'Sunny Street', avenue: '6th Avenue', lat: 6.4693, lng: 3.3284, buses: ['14', '57'] },
+{ id: 40, name: 'Western Road', avenue: '4th Avenue', lat: 6.4672, lng: 3.3035, buses: ['20', '38'] },
+{ id: 41, name: 'Kingsway', avenue: '5th Avenue', lat: 6.4712, lng: 3.3279, buses: ['13', '52'] },
+{ id: 42, name: 'Sunset Boulevard', avenue: '2nd Avenue', lat: 6.4648, lng: 3.2838, buses: ['29', '53'] }
   ];
   
   

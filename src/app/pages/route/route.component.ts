@@ -67,6 +67,7 @@ export class RouteComponent implements AfterViewInit {
         this.busRoutes = buses.map(bus => ({
           busNumber: bus,
         }));
+        this.busNumbers = buses; // Update bus numbers for dynamic change
       },
       error: () => {
         console.log('Failed to fetch bus numbers');
@@ -138,7 +139,7 @@ export class RouteComponent implements AfterViewInit {
         }));
 
         // Split into shorter and longer route stops
-        const midIndex = Math.ceil(this.routeStops.length / 3);
+        const midIndex = Math.ceil(this.routeStops.length / 1);
         this.shorterRouteStops = this.routeStops.slice(0, midIndex);
         this.longerRouteStops = this.routeStops;
       },
