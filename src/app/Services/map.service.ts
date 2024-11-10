@@ -305,6 +305,233 @@ getBusesForRoute(from: string, to: string): Observable<string[]> {
     const longRouteStops = ["6th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "7th Avenue"];
     return of(isShortRoute ? shortRouteStops : longRouteStops);
   }
+  if (from === "2nd Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["2nd Avenue", "Main Street", "Central Park", "1st Avenue"];
+    const longRouteStops = ["2nd Avenue", "Main Street", "North Plaza", "East Gate", "South Park", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "3rd Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["3rd Avenue", "Main Street", "Central Park", "1st Avenue"];
+    const longRouteStops = ["3rd Avenue", "Main Street", "North Plaza", "East Gate", "South Park", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "4th Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["4th Avenue", "Main Street", "Central Park", "Festival Mall", "1st Avenue"];
+    const longRouteStops = ["4th Avenue", "Main Street", "North Plaza", "East Gate", "Festival Mall", "South Park", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "5th Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["5th Avenue", "Main Street", "Central Park", "Festival Mall", "1st Avenue"];
+    const longRouteStops = ["5th Avenue", "Main Street", "North Plaza", "East Gate", "Festival Mall", "South Park", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "6th Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["6th Avenue", "Main Street", "Central Park", "Golden Tulip Festac", "1st Avenue"];
+    const longRouteStops = ["6th Avenue", "Main Street", "North Plaza", "East Gate", "Festival Mall", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "7th Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["7th Avenue", "Main Street", "Central Park", "Festival Mall", "1st Avenue"];
+    const longRouteStops = ["7th Avenue", "Main Street", "North Plaza", "East Gate", "Festival Mall", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "8th Avenue" && to === "1st Avenue") {
+    const shortRouteStops = ["8th Avenue", "Main Street", "Central Park", "Festival Mall", "1st Avenue"];
+    const longRouteStops = ["8th Avenue", "Main Street", "North Plaza", "East Gate", "Festival Mall", "South Park", "1st Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  // Reverse Routes from "2nd Avenue"
+  if (from === "3rd Avenue" && to === "2nd Avenue") {
+    const shortRouteStops = ["3rd Avenue", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["3rd Avenue", "Main Street", "North Plaza", "South Park", "2nd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "4th Avenue" && to === "2nd Avenue") {
+    const shortRouteStops = ["4th Avenue", "Festival Mall", "3rd Avenue", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["4th Avenue", "Main Street", "North Plaza", "South Park", "Festival Mall", "2nd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "5th Avenue" && to === "2nd Avenue") {
+    const shortRouteStops = ["5th Avenue", "Festival Mall", "3rd Avenue", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["5th Avenue", "Main Street", "North Plaza", "East Gate", "Festival Mall", "2nd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "6th Avenue" && to === "2nd Avenue") {
+    const shortRouteStops = ["6th Avenue", "Festival Mall", "3rd Avenue", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["6th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "2nd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "7th Avenue" && to === "2nd Avenue") {
+    const shortRouteStops = ["7th Avenue", "Festival Mall", "3rd Avenue", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["7th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "2nd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "8th Avenue" && to === "2nd Avenue") {
+    const shortRouteStops = ["8th Avenue", "Festival Mall", "3rd Avenue", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["8th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "2nd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  // Reverse Routes from "3rd Avenue"
+  if (from === "4th Avenue" && to === "3rd Avenue") {
+    const shortRouteStops = ["4th Avenue", "Festival Mall", "3rd Avenue"];
+    const longRouteStops = ["4th Avenue", "Main Street", "North Plaza", "South Park", "Festival Mall", "3rd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "5th Avenue" && to === "3rd Avenue") {
+    const shortRouteStops = ["5th Avenue", "Festival Mall", "3rd Avenue"];
+    const longRouteStops = ["5th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "3rd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "6th Avenue" && to === "3rd Avenue") {
+    const shortRouteStops = ["6th Avenue", "Festival Mall", "3rd Avenue"];
+    const longRouteStops = ["6th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "3rd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "7th Avenue" && to === "3rd Avenue") {
+    const shortRouteStops = ["7th Avenue", "Festival Mall", "3rd Avenue"];
+    const longRouteStops = ["7th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "3rd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "8th Avenue" && to === "3rd Avenue") {
+    const shortRouteStops = ["8th Avenue", "Festival Mall", "3rd Avenue"];
+    const longRouteStops = ["8th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "3rd Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+  // Reverse Routes from "4th Avenue"
+  if (from === "5th Avenue" && to === "4th Avenue") {
+    const shortRouteStops = ["5th Avenue", "Festival Mall", "4th Avenue"];
+    const longRouteStops = ["5th Avenue", "Main Street", "North Plaza", "South Park", "Festival Mall", "4th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "6th Avenue" && to === "4th Avenue") {
+    const shortRouteStops = ["6th Avenue", "Festival Mall", "4th Avenue"];
+    const longRouteStops = ["6th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "4th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "7th Avenue" && to === "4th Avenue") {
+    const shortRouteStops = ["7th Avenue", "Festival Mall", "4th Avenue"];
+    const longRouteStops = ["7th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "4th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "8th Avenue" && to === "4th Avenue") {
+    const shortRouteStops = ["8th Avenue", "Festival Mall", "4th Avenue"];
+    const longRouteStops = ["8th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "4th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  // Reverse Routes from "5th Avenue"
+  if (from === "6th Avenue" && to === "5th Avenue") {
+    const shortRouteStops = ["6th Avenue", "Festival Mall", "5th Avenue"];
+    const longRouteStops = ["6th Avenue", "Main Street", "North Plaza", "South Park", "Festival Mall", "5th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "7th Avenue" && to === "5th Avenue") {
+    const shortRouteStops = ["7th Avenue", "Festival Mall", "5th Avenue"];
+    const longRouteStops = ["7th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "5th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "8th Avenue" && to === "5th Avenue") {
+    const shortRouteStops = ["8th Avenue", "Festival Mall", "5th Avenue"];
+    const longRouteStops = ["8th Avenue", "Main Street", "East Gate", "South Park", "Festival Mall", "5th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  // Reverse Routes from "6th Avenue"
+  if (from === "7th Avenue" && to === "6th Avenue") {
+    const shortRouteStops = ["7th Avenue", "Festival Mall", "6th Avenue"];
+    const longRouteStops = ["7th Avenue", "Main Street", "North Plaza", "South Park", "Festival Mall", "6th Avenue"];
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  
+
+    // Reverse Routes from "Main Street"
+    if (from === "Festival Mall" && to === "Main Street") {
+      const shortRouteStops = ["Festival Mall", "Main Street"];
+      const longRouteStops = ["Festival Mall", "North Plaza", "East Gate", "South Park", "Main Street"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    if (from === "Central Park" && to === "Main Street") {
+      const shortRouteStops = ["Central Park", "Main Street"];
+      const longRouteStops = ["Central Park", "North Plaza", "East Gate", "South Park", "Main Street"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    // Reverse Routes from "Festival Mall"
+    if (from === "Central Park" && to === "Festival Mall") {
+      const shortRouteStops = ["Central Park", "Festival Mall"];
+      const longRouteStops = ["Central Park", "South Park", "East Gate", "North Plaza", "Festival Mall"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    if (from === "Main Street" && to === "Festival Mall") {
+      const shortRouteStops = ["Main Street", "Festival Mall"];
+      const longRouteStops = ["Main Street", "South Park", "East Gate", "North Plaza", "Festival Mall"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    // Reverse Routes from "North Plaza"
+    if (from === "South Park" && to === "North Plaza") {
+      const shortRouteStops = ["South Park", "North Plaza"];
+      const longRouteStops = ["South Park", "East Gate", "Festival Mall", "North Plaza"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    if (from === "East Gate" && to === "North Plaza") {
+      const shortRouteStops = ["East Gate", "North Plaza"];
+      const longRouteStops = ["East Gate", "Festival Mall", "South Park", "North Plaza"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    // Reverse Routes from "South Park"
+    if (from === "East Gate" && to === "South Park") {
+      const shortRouteStops = ["East Gate", "South Park"];
+      const longRouteStops = ["East Gate", "Festival Mall", "North Plaza", "South Park"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    if (from === "Festival Mall" && to === "South Park") {
+      const shortRouteStops = ["Festival Mall", "South Park"];
+      const longRouteStops = ["Festival Mall", "North Plaza", "East Gate", "South Park"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    // Reverse Routes from "East Gate"
+    if (from === "Festival Mall" && to === "East Gate") {
+      const shortRouteStops = ["Festival Mall", "East Gate"];
+      const longRouteStops = ["Festival Mall", "North Plaza", "South Park", "East Gate"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+  
+    if (from === "North Plaza" && to === "East Gate") {
+      const shortRouteStops = ["North Plaza", "East Gate"];
+      const longRouteStops = ["North Plaza", "Festival Mall", "South Park", "East Gate"];
+      return of(isShortRoute ? shortRouteStops : longRouteStops);
+    }
+
 
   // Routes from "Festac First Gate"
   if (from === "Festac First Gate" && to === "Festac Second Gate") {
