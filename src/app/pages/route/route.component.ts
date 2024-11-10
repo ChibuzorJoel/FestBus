@@ -152,7 +152,7 @@ export class RouteComponent implements AfterViewInit {
         }));
 
         // Split into shorter and longer route stops
-        const midIndex = Math.ceil(this.routeStops.length / 1);
+        const midIndex = Math.ceil(this.routeStops.length / 2);
         this.shorterRouteStops = this.routeStops.slice(0, midIndex);
         this.longerRouteStops = this.routeStops;
       },
