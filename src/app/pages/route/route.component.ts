@@ -66,7 +66,6 @@ export class RouteComponent implements AfterViewInit {
       next: (buses: string[]) => {
         this.busRoutes = buses.map(bus => ({
           busNumber: bus,
-          
         }));
       },
       error: () => {
@@ -114,7 +113,10 @@ export class RouteComponent implements AfterViewInit {
         this.routeDuration = `${Math.round(summary.totalTime / 60)} min`;
         this.routeDistance = `${(summary.totalDistance / 1000).toFixed(2)} km`;
         this.routeInstructions = routes[0].instructions;
-        this.getStopsAlongRoute(fromCoords, toCoords);
+
+        // Determine if the route is short or long and pass the appropriate value to the method
+        const isShortRoute = true;  // You can set this dynamically based on your logic
+        this.getStopsAlongRoute(fromCoords, toCoords, isShortRoute);
       })
       .addTo(this.map);
     }
@@ -124,8 +126,8 @@ export class RouteComponent implements AfterViewInit {
     }, 500);
   }
 
-  getStopsAlongRoute(fromCoords: [number, number], toCoords: [number, number]) {
-    this.mapService.getStopsBetweenLocations(fromCoords, toCoords).subscribe({
+  getStopsAlongRoute(fromCoords: [number, number], toCoords: [number, number], isShortRoute: boolean) {
+    this.mapService.getStopsBetweenLocations(this.fromLocation, this.toLocation, isShortRoute).subscribe({
       next: (stops: any[]) => {
         this.routeStops = stops.map(stop => ({
           id: stop.id,
@@ -135,7 +137,8 @@ export class RouteComponent implements AfterViewInit {
           dropOff: stop.dropOff || 'N/A'
         }));
 
-        const midIndex = Math.ceil(this.routeStops.length / 2);
+        // Split into shorter and longer route stops
+        const midIndex = Math.ceil(this.routeStops.length / 3);
         this.shorterRouteStops = this.routeStops.slice(0, midIndex);
         this.longerRouteStops = this.routeStops;
       },

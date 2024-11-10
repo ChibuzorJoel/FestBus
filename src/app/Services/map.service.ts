@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class MapService {
     { id: 40, name: 'Ijora Causeway', buses: ['34', '90'], coords: [6.480500, 3.281300] }
   ];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 // Method to get buses for a given route (this is an example, adjust accordingly)
 getBusesForRoute(from: string, to: string): Observable<string[]> {
   // Example data; you can replace this with your actual logic to fetch buses.
@@ -123,14 +124,61 @@ getBusesForRoute(from: string, to: string): Observable<string[]> {
     }
   }
 
-  // Method to get stops between two locations based on coordinates
-  getStopsBetweenLocations(fromCoords: [number, number], toCoords: [number, number]): Observable<string[]> {
-    const stopsInRange = this.busStops.filter(stop => 
-      this.isStopBetween(fromCoords, toCoords, stop.coords as [number, number])
-    ).map(stop => stop.name);
-
-    return of(stopsInRange);
+ // Method to get stops between two locations with custom short and long routes
+ getStopsBetweenLocations(from: string, to: string, isShortRoute: boolean): Observable<string[]> {
+  if (from === "1st Avenue" && to === "2nd Avenue") {
+    // Define the short and long routes for 1st Avenue to 2nd Avenue
+    const shortRouteStops = ["1st Avenue", "Main Street", "Central Park", "2nd Avenue"];
+    const longRouteStops = ["1st Avenue", "Main Street", "North Plaza", "East Gate", "South Park", "2nd Avenue"];
+    
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
   }
+
+  if (from === "2nd Avenue" && to === "3rd Avenue") {
+    // Define the short and long routes for 2nd Avenue to 3rd Avenue
+    const shortRouteStops = ["2nd Avenue", "Central Park", "3rd Avenue"];
+    const longRouteStops = ["2nd Avenue", "Main Street", "North Plaza", "South Park", "3rd Avenue"];
+    
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "3rd Avenue" && to === "4th Avenue") {
+    // Define the short and long routes for 3rd Avenue to 4th Avenue
+    const shortRouteStops = ["3rd Avenue", "Festival Mall", "4th Avenue"];
+    const longRouteStops = ["3rd Avenue", "Main Street", "East Gate", "South Park", "4th Avenue"];
+    
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "4th Avenue" && to === "5th Avenue") {
+    // Define the short and long routes for 4th Avenue to 5th Avenue
+    const shortRouteStops = ["4th Avenue", "Festival Mall", "5th Avenue"];
+    const longRouteStops = ["4th Avenue", "Main Street", "East Gate", "South Park", "5th Avenue"];
+    
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "5th Avenue" && to === "6th Avenue") {
+    // Define the short and long routes for 5th Avenue to 6th Avenue
+    const shortRouteStops = ["5th Avenue", "Golden Tulip Festac", "6th Avenue"];
+    const longRouteStops = ["5th Avenue", "Main Street", "North Plaza", "South Park", "6th Avenue"];
+    
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  if (from === "6th Avenue" && to === "7th Avenue") {
+    // Define the short and long routes for 6th Avenue to 7th Avenue
+    const shortRouteStops = ["6th Avenue", "Festival Mall", "7th Avenue"];
+    const longRouteStops = ["6th Avenue", "Main Street", "East Gate", "South Park", "7th Avenue"];
+    
+    return of(isShortRoute ? shortRouteStops : longRouteStops);
+  }
+
+  // Add more routes here as needed by defining the short and long routes.
+  
+  // If other routes are needed, implement additional logic here or a fallback
+  return of([]);
+}
 
   // Helper method to determine if a stop is between two coordinates
   private isStopBetween(fromCoords: [number, number], toCoords: [number, number], stopCoords: [number, number]): boolean {
